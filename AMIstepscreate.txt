@@ -1,0 +1,40 @@
+#iam role to have
+full ec2 permissions
+#inline policy
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        }
+    ]
+}
+
+
+#resource based policy
+{
+  "Version": "2012-10-17",
+  "Id": "default",
+  "Statement": [
+    {
+      "Sid": "AWSEvents_UPHC-AMI-CREATE_Id387552955154",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "events.amazonaws.com"
+      },
+      "Action": "lambda:InvokeFunction",
+      "Resource": "arn:aws:lambda:ap-south-1:404055429970:function:UPHC-AMI-CREATE",
+      "Condition": {
+        "ArnLike": {
+          "AWS:SourceArn": "arn:aws:events:ap-south-1:404055429970:rule/UPHC-AMI-CREATE"
+        }
+      }
+    }
+  ]
+}
